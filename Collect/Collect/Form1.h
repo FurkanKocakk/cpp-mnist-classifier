@@ -417,6 +417,7 @@ private:
     //
     this->textBox1->Location = System::Drawing::Point(850, 780);
     this->textBox1->Multiline = true;
+    this->textBox1->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
     this->textBox1->Name = L"textBox1";
     this->textBox1->Size = System::Drawing::Size(500, 100);
     this->textBox1->TabIndex = 5;
@@ -947,6 +948,41 @@ private:
       return;
     }
 
+    // Check for Corrupted Weights (NaN)
+    if (Weights != nullptr && bias != nullptr) {
+      bool corrupted = false;
+      for (int l = 0; l < layer_count - 1; l++) {
+        int src = topology[l];
+        int dest = topology[l + 1];
+        for (int k = 0; k < src * dest; k++) {
+          if (System::Double::IsNaN(Weights[l][k]) ||
+              System::Single::IsInfinity(Weights[l][k])) {
+            corrupted = true;
+            break;
+          }
+        }
+        if (corrupted)
+          break;
+        for (int k = 0; k < dest; k++) {
+          if (System::Double::IsNaN(bias[l][k]) ||
+              System::Single::IsInfinity(bias[l][k])) {
+            corrupted = true;
+            break;
+          }
+        }
+        if (corrupted)
+          break;
+      }
+
+      if (corrupted) {
+        MessageBox::Show(
+            "Ağ ağırlıkları bozulmuş (NaN/Sonsuz tespit edildi). Lütfen 'MLP "
+            "Ready' (Set Net) butonuna basarak ağı sıfırlayın.",
+            "Hata", MessageBoxButtons::OK, MessageBoxIcon::Error);
+        return;
+      }
+    }
+
     int Max_epoch = 10000; // Increased even more
     float Min_Err = 0.001f;
     float learning_rate = 0.01f;
@@ -981,11 +1017,10 @@ private:
     }
 
     chart1->Series["Series1"]->Points->Clear();
-    chart1->Series["Series1"]->ChartType =
-        System::Windows::Forms::DataVisualization::Charting::SeriesChartType::
-            Line;
+    chart1->Series["Series1"]->ChartType = System::Windows::Forms::
+        DataVisualization::Charting::SeriesChartType::Area;
     for (int i = 0; i < epoch; i++) {
-        chart1->Series["Series1"]->Points->AddY(error_history[i]);
+      chart1->Series["Series1"]->Points->AddY(error_history[i]);
     }
 
     delete[] error_history;
@@ -1175,7 +1210,7 @@ private:
     // Grafik (Error History)
     chart1->Series["Series1"]->Points->Clear();
     chart1->Series["Series1"]->ChartType = System::Windows::Forms::
-        DataVisualization::Charting::SeriesChartType::Line;
+        DataVisualization::Charting::SeriesChartType::Area;
     for (int i = 0; i < epoch; i++) {
       chart1->Series["Series1"]->Points->AddY(error_history[i]);
     }
