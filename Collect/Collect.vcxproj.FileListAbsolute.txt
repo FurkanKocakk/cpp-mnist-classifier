@@ -1,3 +1,6 @@
 C:\Users\Emre\source\repos\Collect\Collect\Collect.vcxproj.AssemblyReference.cache
 C:\Users\Emre\source\repos\Collect\Collect\Collect.Collect.Form1.resources
 C:\Users\Emre\source\repos\Collect\Collect\Collect.vcxproj.GenerateResource.cache
+C:\Users\fur__\Desktop\collectttt\Collect\Collect\Collect.vcxproj.AssemblyReference.cache
+C:\Users\fur__\Desktop\collectttt\Collect\Collect\Collect.Collect.Form1.resources
+C:\Users\fur__\Desktop\collectttt\Collect\Collect\Collect.vcxproj.GenerateResource.cache
