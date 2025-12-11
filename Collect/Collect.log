@@ -1,2 +1,0 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(523,5): warning MSB8004: Intermediate dizini sonda bir eğik çizgiyle bitmiyor. Intermediate dizininin düzgün değerlendirilmesi için bu eğik çizgi gerekli olduğundan bu oluşturma örneği eğik çizgiyi ekleyecek.
-  Collect.vcxproj -> C:\Users\fur__\Desktop\collectttt\Collect\x64\Debug\Collect.exe
