@@ -22,3 +22,4 @@ Collect/.vs/
 ipch/
 *.metagen
 .idea/
+mnist/
