@@ -981,10 +981,11 @@ private:
     }
 
     chart1->Series["Series1"]->Points->Clear();
-    chart1->Series["Series1"]->ChartType = System::Windows::Forms::
-        DataVisualization::Charting::SeriesChartType::Column;
+    chart1->Series["Series1"]->ChartType =
+        System::Windows::Forms::DataVisualization::Charting::SeriesChartType::
+            Line;
     for (int i = 0; i < epoch; i++) {
-      chart1->Series["Series1"]->Points->AddY(error_history[i]);
+        chart1->Series["Series1"]->Points->AddY(error_history[i]);
     }
 
     delete[] error_history;
