@@ -8929,12 +8929,8 @@ Class System.Windows.Forms.ListBox: AutoLayout, AnsiClass, Class, Public, Before
     set_BackColor(Color): PrivateScope, Public, Virtual, HideBySig, SpecialName
     get_BackgroundImage(): PrivateScope, Public, Virtual, HideBySig, SpecialName
     set_BackgroundImage(Image): PrivateScope, Public, Virtual, HideBySig, SpecialName
-    add_BackgroundImageChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    remove_BackgroundImageChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     get_BackgroundImageLayout(): PrivateScope, Public, Virtual, HideBySig, SpecialName
     set_BackgroundImageLayout(ImageLayout): PrivateScope, Public, Virtual, HideBySig, SpecialName
-    add_BackgroundImageLayoutChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    remove_BackgroundImageLayoutChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     get_BorderStyle(): PrivateScope, Public, HideBySig, SpecialName
     set_BorderStyle(BorderStyle): PrivateScope, Public, HideBySig, SpecialName
     get_ColumnWidth(): PrivateScope, Public, HideBySig, SpecialName
@@ -8975,19 +8971,23 @@ Class System.Windows.Forms.ListBox: AutoLayout, AnsiClass, Class, Public, Before
     set_Sorted(Boolean): PrivateScope, Public, HideBySig, SpecialName
     get_Text(): PrivateScope, Public, Virtual, HideBySig, SpecialName
     set_Text(String): PrivateScope, Public, Virtual, HideBySig, SpecialName
-    add_TextChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    remove_TextChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     get_TopIndex(): PrivateScope, Public, HideBySig, SpecialName
     set_TopIndex(Int32): PrivateScope, Public, HideBySig, SpecialName
     get_UseTabStops(): PrivateScope, Public, HideBySig, SpecialName
     set_UseTabStops(Boolean): PrivateScope, Public, HideBySig, SpecialName
     get_CustomTabOffsets(): PrivateScope, Public, HideBySig, SpecialName
+    get_Padding(): PrivateScope, Public, HideBySig, SpecialName
+    set_Padding(Padding): PrivateScope, Public, HideBySig, SpecialName
+    add_BackgroundImageChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_BackgroundImageChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_BackgroundImageLayoutChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_BackgroundImageLayoutChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_TextChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_TextChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     add_Click(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_Click(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     add_MouseClick(MouseEventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_MouseClick(MouseEventHandler): PrivateScope, Public, HideBySig, SpecialName
-    get_Padding(): PrivateScope, Public, HideBySig, SpecialName
-    set_Padding(Padding): PrivateScope, Public, HideBySig, SpecialName
     add_PaddingChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_PaddingChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     add_Paint(PaintEventHandler): PrivateScope, Public, HideBySig, SpecialName
@@ -10656,21 +10656,14 @@ Class System.Windows.Forms.PictureBox: AutoLayout, AnsiClass, Class, Public, Bef
     set_AllowDrop(Boolean): PrivateScope, Public, Virtual, HideBySig, SpecialName
     get_BorderStyle(): PrivateScope, Public, HideBySig, SpecialName
     set_BorderStyle(BorderStyle): PrivateScope, Public, HideBySig, SpecialName
-    CancelAsync(): PrivateScope, Public, HideBySig
     get_CausesValidation(): PrivateScope, Public, HideBySig, SpecialName
     set_CausesValidation(Boolean): PrivateScope, Public, HideBySig, SpecialName
-    add_CausesValidationChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    remove_CausesValidationChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     get_ErrorImage(): PrivateScope, Public, HideBySig, SpecialName
     set_ErrorImage(Image): PrivateScope, Public, HideBySig, SpecialName
     get_ForeColor(): PrivateScope, Public, Virtual, HideBySig, SpecialName
     set_ForeColor(Color): PrivateScope, Public, Virtual, HideBySig, SpecialName
-    add_ForeColorChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    remove_ForeColorChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     get_Font(): PrivateScope, Public, Virtual, HideBySig, SpecialName
     set_Font(Font): PrivateScope, Public, Virtual, HideBySig, SpecialName
-    add_FontChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    remove_FontChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     get_Image(): PrivateScope, Public, HideBySig, SpecialName
     set_Image(Image): PrivateScope, Public, HideBySig, SpecialName
     get_ImageLocation(): PrivateScope, Public, HideBySig, SpecialName
@@ -10679,34 +10672,38 @@ Class System.Windows.Forms.PictureBox: AutoLayout, AnsiClass, Class, Public, Bef
     set_InitialImage(Image): PrivateScope, Public, HideBySig, SpecialName
     get_ImeMode(): PrivateScope, Public, HideBySig, SpecialName
     set_ImeMode(ImeMode): PrivateScope, Public, HideBySig, SpecialName
+    get_RightToLeft(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    set_RightToLeft(RightToLeft): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    get_SizeMode(): PrivateScope, Public, HideBySig, SpecialName
+    set_SizeMode(PictureBoxSizeMode): PrivateScope, Public, HideBySig, SpecialName
+    get_TabStop(): PrivateScope, Public, HideBySig, SpecialName
+    set_TabStop(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_TabIndex(): PrivateScope, Public, HideBySig, SpecialName
+    set_TabIndex(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_Text(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    set_Text(String): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    get_WaitOnLoad(): PrivateScope, Public, HideBySig, SpecialName
+    set_WaitOnLoad(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    add_CausesValidationChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_CausesValidationChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_ForeColorChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_ForeColorChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_FontChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_FontChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     add_ImeModeChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_ImeModeChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    Load(): PrivateScope, Public, HideBySig
-    Load(String): PrivateScope, Public, HideBySig
-    LoadAsync(): PrivateScope, Public, HideBySig
-    LoadAsync(String): PrivateScope, Public, HideBySig
     add_LoadCompleted(AsyncCompletedEventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_LoadCompleted(AsyncCompletedEventHandler): PrivateScope, Public, HideBySig, SpecialName
     add_LoadProgressChanged(ProgressChangedEventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_LoadProgressChanged(ProgressChangedEventHandler): PrivateScope, Public, HideBySig, SpecialName
-    get_RightToLeft(): PrivateScope, Public, Virtual, HideBySig, SpecialName
-    set_RightToLeft(RightToLeft): PrivateScope, Public, Virtual, HideBySig, SpecialName
     add_RightToLeftChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_RightToLeftChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    get_SizeMode(): PrivateScope, Public, HideBySig, SpecialName
-    set_SizeMode(PictureBoxSizeMode): PrivateScope, Public, HideBySig, SpecialName
     add_SizeModeChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_SizeModeChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    get_TabStop(): PrivateScope, Public, HideBySig, SpecialName
-    set_TabStop(Boolean): PrivateScope, Public, HideBySig, SpecialName
     add_TabStopChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_TabStopChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    get_TabIndex(): PrivateScope, Public, HideBySig, SpecialName
-    set_TabIndex(Int32): PrivateScope, Public, HideBySig, SpecialName
     add_TabIndexChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_TabIndexChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    get_Text(): PrivateScope, Public, Virtual, HideBySig, SpecialName
-    set_Text(String): PrivateScope, Public, Virtual, HideBySig, SpecialName
     add_TextChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_TextChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     add_Enter(EventHandler): PrivateScope, Public, HideBySig, SpecialName
@@ -10719,9 +10716,12 @@ Class System.Windows.Forms.PictureBox: AutoLayout, AnsiClass, Class, Public, Bef
     remove_KeyPress(KeyPressEventHandler): PrivateScope, Public, HideBySig, SpecialName
     add_Leave(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_Leave(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    CancelAsync(): PrivateScope, Public, HideBySig
+    Load(): PrivateScope, Public, HideBySig
+    Load(String): PrivateScope, Public, HideBySig
+    LoadAsync(): PrivateScope, Public, HideBySig
+    LoadAsync(String): PrivateScope, Public, HideBySig
     ToString(): PrivateScope, Public, Virtual, HideBySig
-    get_WaitOnLoad(): PrivateScope, Public, HideBySig, SpecialName
-    set_WaitOnLoad(Boolean): PrivateScope, Public, HideBySig, SpecialName
 Struct System.Windows.Forms.PictureBoxSizeMode: AutoLayout, AnsiClass, Class, Public, Sealed
   :System.Enum
   Fields:
@@ -11914,9 +11914,9 @@ Class System.Windows.Forms.ScrollableControl: AutoLayout, AnsiClass, Class, Publ
     get_HorizontalScroll(): PrivateScope, Public, HideBySig, SpecialName
     get_VerticalScroll(): PrivateScope, Public, HideBySig, SpecialName
     get_DockPadding(): PrivateScope, Public, HideBySig, SpecialName
-    ScrollControlIntoView(Control): PrivateScope, Public, HideBySig
     add_Scroll(ScrollEventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_Scroll(ScrollEventHandler): PrivateScope, Public, HideBySig, SpecialName
+    ScrollControlIntoView(Control): PrivateScope, Public, HideBySig
     SetAutoScrollMargin(Int32, Int32): PrivateScope, Public, HideBySig
 Class System.Windows.Forms.ScrollBar: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
   :System.Windows.Forms.Control
@@ -13592,8 +13592,6 @@ Class System.Windows.Forms.TabPage: AutoLayout, AnsiClass, Class, Public, Before
     set_AutoSizeMode(AutoSizeMode): PrivateScope, Public, Virtual, HideBySig, SpecialName
     get_AutoSize(): PrivateScope, Public, Virtual, HideBySig, SpecialName
     set_AutoSize(Boolean): PrivateScope, Public, Virtual, HideBySig, SpecialName
-    add_AutoSizeChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    remove_AutoSizeChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     get_BackColor(): PrivateScope, Public, Virtual, HideBySig, SpecialName
     set_BackColor(Color): PrivateScope, Public, Virtual, HideBySig, SpecialName
     get_ImageIndex(): PrivateScope, Public, HideBySig, SpecialName
@@ -13604,18 +13602,12 @@ Class System.Windows.Forms.TabPage: AutoLayout, AnsiClass, Class, Public, Before
     set_Anchor(AnchorStyles): PrivateScope, Public, Virtual, HideBySig, SpecialName
     get_Dock(): PrivateScope, Public, Virtual, HideBySig, SpecialName
     set_Dock(DockStyle): PrivateScope, Public, Virtual, HideBySig, SpecialName
-    add_DockChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    remove_DockChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     get_Enabled(): PrivateScope, Public, HideBySig, SpecialName
     set_Enabled(Boolean): PrivateScope, Public, HideBySig, SpecialName
-    add_EnabledChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    remove_EnabledChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     get_UseVisualStyleBackColor(): PrivateScope, Public, HideBySig, SpecialName
     set_UseVisualStyleBackColor(Boolean): PrivateScope, Public, HideBySig, SpecialName
     get_Location(): PrivateScope, Public, HideBySig, SpecialName
     set_Location(Point): PrivateScope, Public, HideBySig, SpecialName
-    add_LocationChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    remove_LocationChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     get_MaximumSize(): PrivateScope, Public, Virtual, HideBySig, SpecialName
     set_MaximumSize(Size): PrivateScope, Public, Virtual, HideBySig, SpecialName
     get_MinimumSize(): PrivateScope, Public, Virtual, HideBySig, SpecialName
@@ -13623,20 +13615,28 @@ Class System.Windows.Forms.TabPage: AutoLayout, AnsiClass, Class, Public, Before
     get_PreferredSize(): PrivateScope, Public, HideBySig, SpecialName
     get_TabIndex(): PrivateScope, Public, HideBySig, SpecialName
     set_TabIndex(Int32): PrivateScope, Public, HideBySig, SpecialName
-    add_TabIndexChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    remove_TabIndexChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     get_TabStop(): PrivateScope, Public, HideBySig, SpecialName
     set_TabStop(Boolean): PrivateScope, Public, HideBySig, SpecialName
-    add_TabStopChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    remove_TabStopChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     get_Text(): PrivateScope, Public, Virtual, HideBySig, SpecialName
     set_Text(String): PrivateScope, Public, Virtual, HideBySig, SpecialName
-    add_TextChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
-    remove_TextChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     get_ToolTipText(): PrivateScope, Public, HideBySig, SpecialName
     set_ToolTipText(String): PrivateScope, Public, HideBySig, SpecialName
     get_Visible(): PrivateScope, Public, HideBySig, SpecialName
     set_Visible(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    add_AutoSizeChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_AutoSizeChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_DockChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_DockChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_EnabledChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_EnabledChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_LocationChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_LocationChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_TabIndexChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_TabIndexChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_TabStopChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_TabStopChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_TextChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_TextChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     add_VisibleChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_VisibleChanged(EventHandler): PrivateScope, Public, HideBySig, SpecialName
     GetTabPageOfComponent(Object): PrivateScope, Public, Static, HideBySig

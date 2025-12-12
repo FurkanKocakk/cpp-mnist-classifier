@@ -772,6 +772,36 @@ Class System.Drawing.Graphics: AutoLayout, AnsiClass, Class, Public, Sealed, Bef
     System.Drawing.RectangleF VisibleClipBounds 'get ' : 
     Boolean IsVisibleClipEmpty 'get ' : 
   Methods:
+    get_CompositingMode(): PrivateScope, Public, HideBySig, SpecialName
+    set_CompositingMode(CompositingMode): PrivateScope, Public, HideBySig, SpecialName
+    get_RenderingOrigin(): PrivateScope, Public, HideBySig, SpecialName
+    set_RenderingOrigin(Point): PrivateScope, Public, HideBySig, SpecialName
+    get_CompositingQuality(): PrivateScope, Public, HideBySig, SpecialName
+    set_CompositingQuality(CompositingQuality): PrivateScope, Public, HideBySig, SpecialName
+    get_TextRenderingHint(): PrivateScope, Public, HideBySig, SpecialName
+    set_TextRenderingHint(TextRenderingHint): PrivateScope, Public, HideBySig, SpecialName
+    get_TextContrast(): PrivateScope, Public, HideBySig, SpecialName
+    set_TextContrast(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_SmoothingMode(): PrivateScope, Public, HideBySig, SpecialName
+    set_SmoothingMode(SmoothingMode): PrivateScope, Public, HideBySig, SpecialName
+    get_PixelOffsetMode(): PrivateScope, Public, HideBySig, SpecialName
+    set_PixelOffsetMode(PixelOffsetMode): PrivateScope, Public, HideBySig, SpecialName
+    get_InterpolationMode(): PrivateScope, Public, HideBySig, SpecialName
+    set_InterpolationMode(InterpolationMode): PrivateScope, Public, HideBySig, SpecialName
+    get_Transform(): PrivateScope, Public, HideBySig, SpecialName
+    set_Transform(Matrix): PrivateScope, Public, HideBySig, SpecialName
+    get_PageUnit(): PrivateScope, Public, HideBySig, SpecialName
+    set_PageUnit(GraphicsUnit): PrivateScope, Public, HideBySig, SpecialName
+    get_PageScale(): PrivateScope, Public, HideBySig, SpecialName
+    set_PageScale(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_DpiX(): PrivateScope, Public, HideBySig, SpecialName
+    get_DpiY(): PrivateScope, Public, HideBySig, SpecialName
+    get_Clip(): PrivateScope, Public, HideBySig, SpecialName
+    set_Clip(Region): PrivateScope, Public, HideBySig, SpecialName
+    get_ClipBounds(): PrivateScope, Public, HideBySig, SpecialName
+    get_IsClipEmpty(): PrivateScope, Public, HideBySig, SpecialName
+    get_VisibleClipBounds(): PrivateScope, Public, HideBySig, SpecialName
+    get_IsVisibleClipEmpty(): PrivateScope, Public, HideBySig, SpecialName
     MeasureString(String, Font, PointF, StringFormat): PrivateScope, Public, HideBySig
     MeasureString(String, Font, SizeF): PrivateScope, Public, HideBySig
     MeasureString(String, Font, SizeF, StringFormat): PrivateScope, Public, HideBySig
@@ -871,12 +901,6 @@ Class System.Drawing.Graphics: AutoLayout, AnsiClass, Class, Public, Sealed, Bef
     TranslateClip(Single, Single): PrivateScope, Public, HideBySig
     TranslateClip(Int32, Int32): PrivateScope, Public, HideBySig
     GetContextInfo(): PrivateScope, Public, HideBySig, HasSecurity
-    get_Clip(): PrivateScope, Public, HideBySig, SpecialName
-    set_Clip(Region): PrivateScope, Public, HideBySig, SpecialName
-    get_ClipBounds(): PrivateScope, Public, HideBySig, SpecialName
-    get_IsClipEmpty(): PrivateScope, Public, HideBySig, SpecialName
-    get_VisibleClipBounds(): PrivateScope, Public, HideBySig, SpecialName
-    get_IsVisibleClipEmpty(): PrivateScope, Public, HideBySig, SpecialName
     IsVisible(Int32, Int32): PrivateScope, Public, HideBySig
     IsVisible(Point): PrivateScope, Public, HideBySig
     IsVisible(Single, Single): PrivateScope, Public, HideBySig
@@ -906,30 +930,6 @@ Class System.Drawing.Graphics: AutoLayout, AnsiClass, Class, Public, Sealed, Bef
     Dispose(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
     Flush(): PrivateScope, Public, HideBySig
     Flush(FlushIntention): PrivateScope, Public, HideBySig
-    get_CompositingMode(): PrivateScope, Public, HideBySig, SpecialName
-    set_CompositingMode(CompositingMode): PrivateScope, Public, HideBySig, SpecialName
-    get_RenderingOrigin(): PrivateScope, Public, HideBySig, SpecialName
-    set_RenderingOrigin(Point): PrivateScope, Public, HideBySig, SpecialName
-    get_CompositingQuality(): PrivateScope, Public, HideBySig, SpecialName
-    set_CompositingQuality(CompositingQuality): PrivateScope, Public, HideBySig, SpecialName
-    get_TextRenderingHint(): PrivateScope, Public, HideBySig, SpecialName
-    set_TextRenderingHint(TextRenderingHint): PrivateScope, Public, HideBySig, SpecialName
-    get_TextContrast(): PrivateScope, Public, HideBySig, SpecialName
-    set_TextContrast(Int32): PrivateScope, Public, HideBySig, SpecialName
-    get_SmoothingMode(): PrivateScope, Public, HideBySig, SpecialName
-    set_SmoothingMode(SmoothingMode): PrivateScope, Public, HideBySig, SpecialName
-    get_PixelOffsetMode(): PrivateScope, Public, HideBySig, SpecialName
-    set_PixelOffsetMode(PixelOffsetMode): PrivateScope, Public, HideBySig, SpecialName
-    get_InterpolationMode(): PrivateScope, Public, HideBySig, SpecialName
-    set_InterpolationMode(InterpolationMode): PrivateScope, Public, HideBySig, SpecialName
-    get_Transform(): PrivateScope, Public, HideBySig, SpecialName
-    set_Transform(Matrix): PrivateScope, Public, HideBySig, SpecialName
-    get_PageUnit(): PrivateScope, Public, HideBySig, SpecialName
-    set_PageUnit(GraphicsUnit): PrivateScope, Public, HideBySig, SpecialName
-    get_PageScale(): PrivateScope, Public, HideBySig, SpecialName
-    set_PageScale(Single): PrivateScope, Public, HideBySig, SpecialName
-    get_DpiX(): PrivateScope, Public, HideBySig, SpecialName
-    get_DpiY(): PrivateScope, Public, HideBySig, SpecialName
     CopyFromScreen(Point, Point, Size): PrivateScope, Public, HideBySig
     CopyFromScreen(Int32, Int32, Int32, Int32, Size): PrivateScope, Public, HideBySig
     CopyFromScreen(Point, Point, Size, CopyPixelOperation): PrivateScope, Public, HideBySig
