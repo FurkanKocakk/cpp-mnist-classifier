@@ -1,0 +1,21 @@
+# Visual Studio
+.vs/
+x64/
+Debug/
+Release/
+*.user
+*.suo
+*.db
+*.opensdf
+*.sdf
+ipch/
+
+# JetBrains
+.idea/
+
+# Data
+mnist/
+
+# OS
+Thumbs.db
+.DS_Store
