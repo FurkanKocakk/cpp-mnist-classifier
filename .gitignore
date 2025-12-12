@@ -1,25 +1,21 @@
+# Visual Studio
 .vs/
-**/.vs/
-Collect/.vs/
-**/x64/
-**/Debug/
-**/Release/
-*.obj
-*.tlog
-*.pdb
-*.exe
-*.recipe
-*.log
-*.ipch
-*.db
-*.idb
-*.pch
-*.res
-*.ilk
-*.sdf
-*.opensdf
+x64/
+Debug/
+Release/
+*.user
 *.suo
+*.db
+*.opensdf
+*.sdf
 ipch/
-*.metagen
+
+# JetBrains
 .idea/
+
+# Data
 mnist/
+
+# OS
+Thumbs.db
+.DS_Store

@@ -1,10 +1,8 @@
 #pragma once
-#include "MnistLoader.h"
 #include "Network.h"
 #include "Process.h"
 #include <fstream>
 #include <iostream>
-#include <random>
 #include <string>
 
 namespace CppCLRWinformsProjekt {
@@ -113,9 +111,6 @@ private:
 
 private:
   System::Windows::Forms::ToolStripMenuItem ^ readDataToolStripMenuItem;
-
-private:
-  System::Windows::Forms::ToolStripMenuItem ^ loadMnistToolStripMenuItem;
 
 private:
   System::Windows::Forms::OpenFileDialog ^ openFileDialog1;
@@ -358,9 +353,8 @@ private:
     // fileToolStripMenuItem
     //
     this->fileToolStripMenuItem->DropDownItems->AddRange(
-        gcnew cli::array<System::Windows::Forms::ToolStripItem ^>(3){
-            this->readDataToolStripMenuItem, this->saveDataToolStripMenuItem,
-            this->loadMnistToolStripMenuItem});
+        gcnew cli::array<System::Windows::Forms::ToolStripItem ^>(2){
+            this->readDataToolStripMenuItem, this->saveDataToolStripMenuItem});
     this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
     this->fileToolStripMenuItem->Size = System::Drawing::Size(37, 20);
     this->fileToolStripMenuItem->Text = L"File";
@@ -380,14 +374,6 @@ private:
     this->saveDataToolStripMenuItem->Text = L"Save_Data";
     this->saveDataToolStripMenuItem->Click += gcnew System::EventHandler(
         this, &Form1::saveDataToolStripMenuItem_Click);
-    //
-    // loadMnistToolStripMenuItem
-    //
-    this->loadMnistToolStripMenuItem->Name = L"loadMnistToolStripMenuItem";
-    this->loadMnistToolStripMenuItem->Size = System::Drawing::Size(129, 22);
-    this->loadMnistToolStripMenuItem->Text = L"Load MNIST";
-    this->loadMnistToolStripMenuItem->Click += gcnew System::EventHandler(
-        this, &Form1::loadMnistToolStripMenuItem_Click);
     //
     // processToolStripMenuItem
     //
@@ -431,7 +417,6 @@ private:
     //
     this->textBox1->Location = System::Drawing::Point(850, 780);
     this->textBox1->Multiline = true;
-    this->textBox1->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
     this->textBox1->Name = L"textBox1";
     this->textBox1->Size = System::Drawing::Size(500, 100);
     this->textBox1->TabIndex = 5;
@@ -867,106 +852,6 @@ private:
     MessageBox::Show("At least one sample should be given");
     */
   } // Save_Data
-
-private:
-  System::Void loadMnistToolStripMenuItem_Click(System::Object ^ sender,
-                                                System::EventArgs ^ e) {
-    try {
-      std::string loadPath = "";
-      std::string rootMnist = "..\\..\\mnist";
-
-      // Auto-detect root mnist
-      if (!System::IO::Directory::Exists(gcnew String(rootMnist.c_str()))) {
-        rootMnist = "..\\mnist";
-      }
-
-      String ^ checkRoot = gcnew String(rootMnist.c_str());
-      if (System::IO::Directory::Exists(checkRoot)) {
-        System::Windows::Forms::DialogResult result = MessageBox::Show(
-            "MNIST klasörü bulundu.\n\nTRAINING verisini yüklemek için 'Evet' "
-            "(Yes),\nTEST verisini yüklemek için 'Hayır' (No),\nFarklı bir "
-            "klasör seçmek için 'İptal' (Cancel) tıklayın.",
-            "Veri Seçimi", MessageBoxButtons::YesNoCancel,
-            MessageBoxIcon::Question);
-
-        if (result == System::Windows::Forms::DialogResult::Yes) {
-          loadPath = rootMnist + "\\train";
-        } else if (result == System::Windows::Forms::DialogResult::No) {
-          loadPath = rootMnist + "\\test";
-        } else {
-          // Browse
-          FolderBrowserDialog ^ fbd = gcnew FolderBrowserDialog();
-          if (fbd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-            loadPath =
-                msclr::interop::marshal_as<std::string>(fbd->SelectedPath);
-          } else {
-            return;
-          }
-        }
-      } else {
-        // Not found, browse directly
-        MessageBox::Show("MNIST klasörü otomatik bulunamadı. Lütfen 0-9 "
-                         "klasörlerini içeren veri setini seçin.",
-                         "Klasör Seç", MessageBoxButtons::OK,
-                         MessageBoxIcon::Information);
-        FolderBrowserDialog ^ fbd = gcnew FolderBrowserDialog();
-        if (fbd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-          loadPath = msclr::interop::marshal_as<std::string>(fbd->SelectedPath);
-        } else {
-          return;
-        }
-      }
-
-      // --- Load Data ---
-      std::vector<MnistEntry> loadedData =
-          MnistLoader::LoadFromFolder(loadPath);
-
-      if (loadedData.empty()) {
-        MessageBox::Show("Seçilen klasörde resim bulunamadı veya '0, 1...9' "
-                         "klasör yapısı yok.",
-                         "Hata", MessageBoxButtons::OK, MessageBoxIcon::Error);
-        return;
-      }
-
-      // Populate Form1 arrays
-      if (this->Samples)
-        delete[] this->Samples;
-      if (this->targets)
-        delete[] this->targets;
-
-      this->numSample = loadedData.size();
-      this->inputDim = 784; // 28x28
-      this->class_count = 10;
-
-      this->Samples = new float[this->numSample * this->inputDim];
-      this->targets = new float[this->numSample];
-
-      // Shuffle
-      std::random_device rd;
-      std::mt19937 g(rd());
-      std::shuffle(loadedData.begin(), loadedData.end(), g);
-
-      for (size_t i = 0; i < loadedData.size(); i++) {
-        for (int p = 0; p < inputDim; p++) {
-          // Normalize 0-255 -> 0.0-1.0
-          this->Samples[i * inputDim + p] = loadedData[i].pixels[p] / 255.0f;
-        }
-        this->targets[i] = (float)loadedData[i].label;
-      }
-
-      MessageBox::Show("Veri Seti Yüklendi!\nToplam Örnek: " + this->numSample,
-                       "Başarılı");
-      label3->Text = "Samples: " + Convert::ToString(this->numSample);
-
-    } catch (const std::exception &ex) {
-      MessageBox::Show(gcnew System::String(ex.what()), "Error",
-                       MessageBoxButtons::OK, MessageBoxIcon::Error);
-    } catch (...) {
-      MessageBox::Show("Unknown error loading MNIST.", "Error",
-                       MessageBoxButtons::OK, MessageBoxIcon::Error);
-    }
-  }
-
 private:
   System::Void testingToolStripMenuItem_Click(System::Object ^ sender,
                                               System::EventArgs ^ e) {
@@ -1062,41 +947,6 @@ private:
       return;
     }
 
-    // Check for Corrupted Weights (NaN)
-    if (Weights != nullptr && bias != nullptr) {
-      bool corrupted = false;
-      for (int l = 0; l < layer_count - 1; l++) {
-        int src = topology[l];
-        int dest = topology[l + 1];
-        for (int k = 0; k < src * dest; k++) {
-          if (System::Double::IsNaN(Weights[l][k]) ||
-              System::Single::IsInfinity(Weights[l][k])) {
-            corrupted = true;
-            break;
-          }
-        }
-        if (corrupted)
-          break;
-        for (int k = 0; k < dest; k++) {
-          if (System::Double::IsNaN(bias[l][k]) ||
-              System::Single::IsInfinity(bias[l][k])) {
-            corrupted = true;
-            break;
-          }
-        }
-        if (corrupted)
-          break;
-      }
-
-      if (corrupted) {
-        MessageBox::Show(
-            "Ağ ağırlıkları bozulmuş (NaN/Sonsuz tespit edildi). Lütfen 'MLP "
-            "Ready' (Set Net) butonuna basarak ağı sıfırlayın.",
-            "Hata", MessageBoxButtons::OK, MessageBoxIcon::Error);
-        return;
-      }
-    }
-
     int Max_epoch = 10000; // Increased even more
     float Min_Err = 0.001f;
     float learning_rate = 0.01f;
@@ -1132,7 +982,7 @@ private:
 
     chart1->Series["Series1"]->Points->Clear();
     chart1->Series["Series1"]->ChartType = System::Windows::Forms::
-        DataVisualization::Charting::SeriesChartType::Area;
+        DataVisualization::Charting::SeriesChartType::Column;
     for (int i = 0; i < epoch; i++) {
       chart1->Series["Series1"]->Points->AddY(error_history[i]);
     }
@@ -1324,7 +1174,7 @@ private:
     // Grafik (Error History)
     chart1->Series["Series1"]->Points->Clear();
     chart1->Series["Series1"]->ChartType = System::Windows::Forms::
-        DataVisualization::Charting::SeriesChartType::Area;
+        DataVisualization::Charting::SeriesChartType::Line;
     for (int i = 0; i < epoch; i++) {
       chart1->Series["Series1"]->Points->AddY(error_history[i]);
     }

@@ -81,12 +81,7 @@ float *train_fcn(float *Samples, int numSample, float *targets, int *topology,
           net[l][j] += Biases[l - 1][j];
 
           // Aktivasyon (Tanh)
-          float val = net[l][j];
-          if (val > 20.0f)
-            val = 20.0f;
-          if (val < -20.0f)
-            val = -20.0f;
-          fnet[l][j] = (2.0f / (1.0f + exp(-val)) - 1.0f);
+          fnet[l][j] = (2.0f / (1.0f + exp(-net[l][j])) - 1.0f);
           // Türev
           f_der[l][j] = 0.5f * (1.0f - fnet[l][j] * fnet[l][j]);
         }
@@ -223,12 +218,7 @@ int Test_Forward(float *input, float **Weights, float **Biases, int *topology,
       net[l][j] += Biases[l - 1][j];
 
       // Aktivasyon (Tanh)
-      float val = net[l][j];
-      if (val > 20.0f)
-        val = 20.0f;
-      if (val < -20.0f)
-        val = -20.0f;
-      fnet[l][j] = (2.0f / (1.0f + exp(-val)) - 1.0f);
+      fnet[l][j] = (2.0f / (1.0f + exp(-net[l][j])) - 1.0f);
     }
   }
 
@@ -329,12 +319,7 @@ float *train_mlp_regression(float *Samples, int numSample, float *targets,
             f_der[l][j] = 1.0f;
           } else {
             // Hidden Layers: TANH Activation
-            float val = net[l][j];
-            if (val > 20.0f)
-              val = 20.0f;
-            if (val < -20.0f)
-              val = -20.0f;
-            fnet[l][j] = (2.0f / (1.0f + exp(-val)) - 1.0f);
+            fnet[l][j] = (2.0f / (1.0f + exp(-net[l][j])) - 1.0f);
             f_der[l][j] = 0.5f * (1.0f - fnet[l][j] * fnet[l][j]);
           }
         }
@@ -459,12 +444,7 @@ float Evaluate_Regression_Point(float input_val, float **Weights,
         fnet[l][j] = net[l][j];
       } else {
         // Hidden Layers: TANH Activation
-        float val = net[l][j];
-        if (val > 20.0f)
-          val = 20.0f;
-        if (val < -20.0f)
-          val = -20.0f;
-        fnet[l][j] = (2.0f / (1.0f + exp(-val)) - 1.0f);
+        fnet[l][j] = (2.0f / (1.0f + exp(-net[l][j])) - 1.0f);
       }
     }
   }
