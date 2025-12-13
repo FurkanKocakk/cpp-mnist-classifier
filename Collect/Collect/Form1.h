@@ -545,7 +545,7 @@ private:
     this->txtMomentum->Name = L"txtMomentum";
     this->txtMomentum->Size = System::Drawing::Size(50, 20);
     this->txtMomentum->TabIndex = 8;
-    this->txtMomentum->Text = L"0.9";
+    this->txtMomentum->Text = L"0,9";
     //
     // btnSetMomentum
     //
@@ -1348,13 +1348,14 @@ private:
       return;
     }
 
-    float learningRate = 0.01f; // Daha yüksek learning rate
+    float learningRate = 0.005f; // Düşük LR - daha stabil öğrenme
     float momentum = currentMomentum;
-    float minError = 0.05f; // Daha yüksek tolerans
-    int maxEpoch = 20;      // Daha az epoch (hızlı test için)
+    float minError = 0.01f; // Düşük hata toleransı
+    int maxEpoch = 50;      // Daha fazla epoch
     int finalEpoch = 0;
 
-    textBox1->Text =
+    textBox1->Text += "\r\n========================================\r\n";
+    textBox1->Text +=
         "MLP Egitimi basliyor...\r\nLearning Rate: " + learningRate +
         "\r\nMomentum: " + momentum + "\r\nMax Epoch: " + maxEpoch + "\r\n";
     textBox1->Text += "Lutfen bekleyin, bu islem biraz zaman alabilir...\r\n";
@@ -1405,14 +1406,16 @@ private:
     int confMatrix[10][10];
     float accuracy = mnistManager->TestMLP(confMatrix);
 
-    textBox1->Text = "=== MLP CONFUSION MATRIX ===\r\n";
-    textBox1->Text += "     0  1  2  3  4  5  6  7  8  9  <- Predicted\r\n";
-    textBox1->Text += "    --------------------------------\r\n";
+    textBox1->Text += "\r\n========================================\r\n";
+    textBox1->Text += "=== MLP CONFUSION MATRIX ===\r\n";
+    textBox1->Text +=
+        "       0   1   2   3   4   5   6   7   8   9  <- Predicted\r\n";
+    textBox1->Text += "    --------------------------------------------\r\n";
 
     for (int i = 0; i < 10; i++) {
-      String ^ row = i + " |  ";
+      String ^ row = i + " |";
       for (int j = 0; j < 10; j++) {
-        row += confMatrix[i][j].ToString()->PadLeft(2) + " ";
+        row += confMatrix[i][j].ToString()->PadLeft(4);
       }
       textBox1->Text += row + "\r\n";
     }
@@ -1429,14 +1432,15 @@ private:
       return;
     }
 
-    float learningRate = 0.002f; // Daha düşük (stabil öğrenme)
+    float learningRate = 0.002f; // Düşük (stabil öğrenme)
     float momentum = currentMomentum;
-    float minError = 0.05f; // Daha düşük tolerans
-    int maxEpoch = 30;      // Daha fazla epoch
+    float minError = 0.01f; // Düşük hata toleransı
+    int maxEpoch = 50;      // 50 epoch
     int finalEpoch = 0;
 
-    textBox1->Text =
-        "Autoencoder Egitimi basliyor...\r\nMimari: 784->420->10->420->784\r\n";
+    textBox1->Text += "\r\n========================================\r\n";
+    textBox1->Text +=
+        "Autoencoder Egitimi basliyor...\r\nMimari: 784->256->32->256->784\r\n";
     textBox1->Text += "Lutfen bekleyin (bu islem cok uzun surebilir)...\r\n";
     this->Refresh();
     Application::DoEvents();
@@ -1507,14 +1511,16 @@ private:
     int confMatrix[10][10];
     float accuracy = mnistManager->TestEncoderClassifier(confMatrix);
 
-    textBox1->Text = "=== ENCODER+CLASSIFIER CONFUSION MATRIX ===\r\n";
-    textBox1->Text += "     0  1  2  3  4  5  6  7  8  9  <- Predicted\r\n";
-    textBox1->Text += "    --------------------------------\r\n";
+    textBox1->Text += "\r\n========================================\r\n";
+    textBox1->Text += "=== ENCODER+CLASSIFIER CONFUSION MATRIX ===\r\n";
+    textBox1->Text +=
+        "       0   1   2   3   4   5   6   7   8   9  <- Predicted\r\n";
+    textBox1->Text += "    --------------------------------------------\r\n";
 
     for (int i = 0; i < 10; i++) {
-      String ^ row = i + " |  ";
+      String ^ row = i + " |";
       for (int j = 0; j < 10; j++) {
-        row += confMatrix[i][j].ToString()->PadLeft(2) + " ";
+        row += confMatrix[i][j].ToString()->PadLeft(4);
       }
       textBox1->Text += row + "\r\n";
     }

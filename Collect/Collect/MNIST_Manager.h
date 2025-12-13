@@ -229,7 +229,7 @@ public:
   }
 
   // ========== AUTOENCODER EĞİTİMİ ==========
-  // 784 -> 420 -> 10 -> 420 -> 784 (simetrik)
+  // 784 -> 256 -> 32 -> 256 -> 784 (simetrik)
   float *TrainAutoencoder(float learningRate, float momentum, float minError,
                           int maxEpoch, int &finalEpoch) {
     if (!dataLoaded)
@@ -237,13 +237,13 @@ public:
 
     CleanupAutoencoder();
 
-    // Topology: 784 -> 420 -> 10 (latent) -> 420 -> 784
+    // Topology: 784 -> 256 -> 32 (latent) -> 256 -> 784
     aeLayerCount = 5;
     aeTopology = new int[aeLayerCount];
     aeTopology[0] = 784;
-    aeTopology[1] = 420;
-    aeTopology[2] = 10; // Latent space
-    aeTopology[3] = 420;
+    aeTopology[1] = 256;
+    aeTopology[2] = 32; // Latent space - artırıldı!
+    aeTopology[3] = 256;
     aeTopology[4] = 784;
 
     // Ağırlık allocation
@@ -266,10 +266,11 @@ public:
 
     CleanupEncoderClassifier();
 
-    // Encoder output (10) -> Hidden(64) -> Output(10)
+    // Encoder output (32) -> Hidden(64) -> Output(10)
     encClassifierLayerCount = 3;
     encClassifierTopology = new int[encClassifierLayerCount];
-    encClassifierTopology[0] = 10; // Encoder çıktısı (latent dim)
+    encClassifierTopology[0] =
+        32; // Encoder çıktısı (latent dim) - güncellendi!
     encClassifierTopology[1] = 64;
     encClassifierTopology[2] = 10; // Sınıf sayısı
 
@@ -525,21 +526,21 @@ private:
     std::vector<float> result;
 
     // Autoencoder'ın ilk yarısını çalıştır (encoder kısmı)
-    // aeTopology: 784 -> 420 -> 10 -> 420 -> 784
-    // Encoder: 784 -> 420 -> 10 (ilk 3 katman)
+    // aeTopology: 784 -> 256 -> 32 -> 256 -> 784
+    // Encoder: 784 -> 256 -> 32 (ilk 3 katman)
 
     float **fnet = new float *[3];
     fnet[0] = new float[784];
-    fnet[1] = new float[420];
-    fnet[2] = new float[10];
+    fnet[1] = new float[256]; // 420'den 256'ya güncellendi
+    fnet[2] = new float[32];  // 10'dan 32'ye güncellendi
 
     // Input
     for (int i = 0; i < 784; i++) {
       fnet[0][i] = input[i];
     }
 
-    // Layer 1: 784 -> 420
-    for (int j = 0; j < 420; j++) {
+    // Layer 1: 784 -> 256
+    for (int j = 0; j < 256; j++) {
       float net = 0.0f;
       for (int i = 0; i < 784; i++) {
         net += aeWeights[0][j * 784 + i] * fnet[0][i];
@@ -548,11 +549,11 @@ private:
       fnet[1][j] = Tanh(net);
     }
 
-    // Layer 2: 420 -> 10 (latent)
-    for (int j = 0; j < 10; j++) {
+    // Layer 2: 256 -> 32 (latent)
+    for (int j = 0; j < 32; j++) {
       float net = 0.0f;
-      for (int i = 0; i < 420; i++) {
-        net += aeWeights[1][j * 420 + i] * fnet[1][i];
+      for (int i = 0; i < 256; i++) {
+        net += aeWeights[1][j * 256 + i] * fnet[1][i];
       }
       net += aeBias[1][j];
       fnet[2][j] = Tanh(net);
