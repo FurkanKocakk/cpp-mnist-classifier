@@ -184,11 +184,7 @@
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Collect\Form1.resx">
-      <DependentUpon>Collect\Form1.h</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

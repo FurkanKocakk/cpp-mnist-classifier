@@ -1,4 +1,13 @@
 #pragma once
+
+// Prevent Windows SDK conflicts with .NET Framework
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+
 #include <algorithm>
 #include <map>
 #include <msclr/marshal_cppstd.h>
@@ -72,9 +81,8 @@ public:
               // 0=black. Let's assume standard intensity.
               float val = (c.R + c.G + c.B) / 3.0f;
 
-              // Normalize 0-255 -> 0.0-1.0
-              entry.pixels[y * 28 + x] = val; // Store raw 0-255 value for now?
-              // Form1 normalized it /255.0f. Let's return raw 0-255 equivalent.
+              // Normalize 0-255 -> [-1, 1] for tanh activation
+              entry.pixels[y * 28 + x] = (val / 127.5f) - 1.0f;
             }
           }
           delete bmp;

@@ -5,5 +5,3 @@ C:\Users\fur__\Desktop\collectttt\Collect\Collect\Collect.vcxproj.AssemblyRefere
 C:\Users\fur__\Desktop\collectttt\Collect\Collect\Collect.Collect.Form1.resources
 C:\Users\fur__\Desktop\collectttt\Collect\Collect\Collect.vcxproj.GenerateResource.cache
 C:\Users\fur__\Desktop\Collect\Collect\Collect\Collect.vcxproj.AssemblyReference.cache
-C:\Users\fur__\Desktop\Collect\Collect\Collect\Collect.Collect.Form1.resources
-C:\Users\fur__\Desktop\Collect\Collect\Collect\Collect.vcxproj.GenerateResource.cache

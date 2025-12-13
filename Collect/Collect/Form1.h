@@ -1,4 +1,5 @@
 #pragma once
+#include "MNIST_Manager.h"
 #include "Network.h"
 #include "Process.h"
 #include <fstream>
@@ -23,6 +24,8 @@ ref class Form1 : public System::Windows::Forms::Form {
 public:
   Form1(void) {
     InitializeComponent();
+    // MNIST Manager (Designer uyumlulugu icin burada)
+    mnistManager = gcnew MNIST_Manager();
     //
     // TODO: Konstruktorcode hier hinzuf�gen.
     //
@@ -136,6 +139,17 @@ private:
 private:
   System::Windows::Forms::ToolStripMenuItem ^ regressionToolStripMenuItem;
 
+  // MNIST Menu Items
+private:
+  System::Windows::Forms::ToolStripMenuItem ^ mnistToolStripMenuItem;
+  System::Windows::Forms::ToolStripMenuItem ^ loadMNISTToolStripMenuItem;
+  System::Windows::Forms::ToolStripMenuItem ^ trainMNISTToolStripMenuItem;
+  System::Windows::Forms::ToolStripMenuItem ^ testMNISTToolStripMenuItem;
+  System::Windows::Forms::ToolStripMenuItem ^ trainAutoencoderToolStripMenuItem;
+  System::Windows::Forms::ToolStripMenuItem ^
+      testEncoderClassifierToolStripMenuItem;
+  System::Windows::Forms::FolderBrowserDialog ^ folderBrowserDialog1;
+
 private:
   System::Windows::Forms::DataVisualization::Charting::Chart ^ chart1;
 
@@ -149,12 +163,12 @@ private:
   /// </summary>
   void InitializeComponent(void) {
     System::Windows::Forms::DataVisualization::Charting::ChartArea ^
-        chartArea1 =
+        chartArea2 =
         (gcnew
              System::Windows::Forms::DataVisualization::Charting::ChartArea());
-    System::Windows::Forms::DataVisualization::Charting::Legend ^ legend1 =
+    System::Windows::Forms::DataVisualization::Charting::Legend ^ legend2 =
         (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
-    System::Windows::Forms::DataVisualization::Charting::Series ^ series1 =
+    System::Windows::Forms::DataVisualization::Charting::Series ^ series2 =
         (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
     this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
     this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
@@ -183,6 +197,18 @@ private:
         (gcnew System::Windows::Forms::ToolStripMenuItem());
     this->regressionToolStripMenuItem =
         (gcnew System::Windows::Forms::ToolStripMenuItem());
+    this->mnistToolStripMenuItem =
+        (gcnew System::Windows::Forms::ToolStripMenuItem());
+    this->loadMNISTToolStripMenuItem =
+        (gcnew System::Windows::Forms::ToolStripMenuItem());
+    this->trainMNISTToolStripMenuItem =
+        (gcnew System::Windows::Forms::ToolStripMenuItem());
+    this->testMNISTToolStripMenuItem =
+        (gcnew System::Windows::Forms::ToolStripMenuItem());
+    this->trainAutoencoderToolStripMenuItem =
+        (gcnew System::Windows::Forms::ToolStripMenuItem());
+    this->testEncoderClassifierToolStripMenuItem =
+        (gcnew System::Windows::Forms::ToolStripMenuItem());
     this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
     this->textBox1 = (gcnew System::Windows::Forms::TextBox());
     this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
@@ -191,11 +217,12 @@ private:
     this->lblMomentum = (gcnew System::Windows::Forms::Label());
     this->txtMomentum = (gcnew System::Windows::Forms::TextBox());
     this->btnSetMomentum = (gcnew System::Windows::Forms::Button());
+    this->folderBrowserDialog1 =
+        (gcnew System::Windows::Forms::FolderBrowserDialog());
     (cli::safe_cast<System::ComponentModel::ISupportInitialize ^>(
          this->pictureBox1))
         ->BeginInit();
     this->groupBox1->SuspendLayout();
-
     this->groupBox2->SuspendLayout();
     this->menuStrip1->SuspendLayout();
     (cli::safe_cast<System::ComponentModel::ISupportInitialize ^>(this->chart1))
@@ -342,11 +369,12 @@ private:
     // menuStrip1
     //
     this->menuStrip1->Items->AddRange(
-        gcnew cli::array<System::Windows::Forms::ToolStripItem ^>(2){
-            this->fileToolStripMenuItem, this->processToolStripMenuItem});
+        gcnew cli::array<System::Windows::Forms::ToolStripItem ^>(3){
+            this->fileToolStripMenuItem, this->processToolStripMenuItem,
+            this->mnistToolStripMenuItem});
     this->menuStrip1->Location = System::Drawing::Point(0, 0);
     this->menuStrip1->Name = L"menuStrip1";
-    this->menuStrip1->Size = System::Drawing::Size(1463, 24);
+    this->menuStrip1->Size = System::Drawing::Size(1505, 24);
     this->menuStrip1->TabIndex = 4;
     this->menuStrip1->Text = L"menuStrip1";
     //
@@ -409,16 +437,77 @@ private:
     this->regressionToolStripMenuItem->Click += gcnew System::EventHandler(
         this, &Form1::regressionToolStripMenuItem_Click);
     //
+    // mnistToolStripMenuItem
+    //
+    this->mnistToolStripMenuItem->DropDownItems->AddRange(
+        gcnew cli::array<System::Windows::Forms::ToolStripItem ^>(5){
+            this->loadMNISTToolStripMenuItem, this->trainMNISTToolStripMenuItem,
+            this->testMNISTToolStripMenuItem,
+            this->trainAutoencoderToolStripMenuItem,
+            this->testEncoderClassifierToolStripMenuItem});
+    this->mnistToolStripMenuItem->Name = L"mnistToolStripMenuItem";
+    this->mnistToolStripMenuItem->Size = System::Drawing::Size(55, 20);
+    this->mnistToolStripMenuItem->Text = L"MNIST";
+    //
+    // loadMNISTToolStripMenuItem
+    //
+    this->loadMNISTToolStripMenuItem->Name = L"loadMNISTToolStripMenuItem";
+    this->loadMNISTToolStripMenuItem->Size = System::Drawing::Size(237, 22);
+    this->loadMNISTToolStripMenuItem->Text = L"Load MNIST Dataset";
+    this->loadMNISTToolStripMenuItem->Click += gcnew System::EventHandler(
+        this, &Form1::loadMNISTToolStripMenuItem_Click);
+    //
+    // trainMNISTToolStripMenuItem
+    //
+    this->trainMNISTToolStripMenuItem->Name = L"trainMNISTToolStripMenuItem";
+    this->trainMNISTToolStripMenuItem->Size = System::Drawing::Size(237, 22);
+    this->trainMNISTToolStripMenuItem->Text = L"Train MLP (784->128->64->10)";
+    this->trainMNISTToolStripMenuItem->Click += gcnew System::EventHandler(
+        this, &Form1::trainMNISTToolStripMenuItem_Click);
+    //
+    // testMNISTToolStripMenuItem
+    //
+    this->testMNISTToolStripMenuItem->Name = L"testMNISTToolStripMenuItem";
+    this->testMNISTToolStripMenuItem->Size = System::Drawing::Size(237, 22);
+    this->testMNISTToolStripMenuItem->Text = L"Test MLP";
+    this->testMNISTToolStripMenuItem->Click += gcnew System::EventHandler(
+        this, &Form1::testMNISTToolStripMenuItem_Click);
+    //
+    // trainAutoencoderToolStripMenuItem
+    //
+    this->trainAutoencoderToolStripMenuItem->Name =
+        L"trainAutoencoderToolStripMenuItem";
+    this->trainAutoencoderToolStripMenuItem->Size =
+        System::Drawing::Size(237, 22);
+    this->trainAutoencoderToolStripMenuItem->Text =
+        L"Train Autoencoder + Classifier";
+    this->trainAutoencoderToolStripMenuItem->Click +=
+        gcnew System::EventHandler(
+            this, &Form1::trainAutoencoderToolStripMenuItem_Click);
+    //
+    // testEncoderClassifierToolStripMenuItem
+    //
+    this->testEncoderClassifierToolStripMenuItem->Name =
+        L"testEncoderClassifierToolStripMenuItem";
+    this->testEncoderClassifierToolStripMenuItem->Size =
+        System::Drawing::Size(237, 22);
+    this->testEncoderClassifierToolStripMenuItem->Text =
+        L"Test Encoder + Classifier";
+    this->testEncoderClassifierToolStripMenuItem->Click +=
+        gcnew System::EventHandler(
+            this, &Form1::testEncoderClassifierToolStripMenuItem_Click);
+    //
     // openFileDialog1
     //
     this->openFileDialog1->FileName = L"openFileDialog1";
     //
     // textBox1
     //
-    this->textBox1->Location = System::Drawing::Point(850, 780);
+    this->textBox1->Location = System::Drawing::Point(1076, 135);
     this->textBox1->Multiline = true;
     this->textBox1->Name = L"textBox1";
-    this->textBox1->Size = System::Drawing::Size(500, 100);
+    this->textBox1->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
+    this->textBox1->Size = System::Drawing::Size(417, 318);
     this->textBox1->TabIndex = 5;
     //
     // saveFileDialog1
@@ -427,16 +516,16 @@ private:
     //
     // chart1
     //
-    chartArea1->Name = L"ChartArea1";
-    this->chart1->ChartAreas->Add(chartArea1);
-    legend1->Name = L"Legend1";
-    this->chart1->Legends->Add(legend1);
+    chartArea2->Name = L"ChartArea1";
+    this->chart1->ChartAreas->Add(chartArea2);
+    legend2->Name = L"Legend1";
+    this->chart1->Legends->Add(legend2);
     this->chart1->Location = System::Drawing::Point(850, 470);
     this->chart1->Name = L"chart1";
-    series1->ChartArea = L"ChartArea1";
-    series1->Legend = L"Legend1";
-    series1->Name = L"Series1";
-    this->chart1->Series->Add(series1);
+    series2->ChartArea = L"ChartArea1";
+    series2->Legend = L"Legend1";
+    series2->Name = L"Series1";
+    this->chart1->Series->Add(series2);
     this->chart1->Size = System::Drawing::Size(500, 300);
     this->chart1->TabIndex = 6;
     this->chart1->Text = L"chart1";
@@ -469,11 +558,16 @@ private:
     this->btnSetMomentum->Click +=
         gcnew System::EventHandler(this, &Form1::btnSetMomentum_Click);
     //
+    // folderBrowserDialog1
+    //
+    this->folderBrowserDialog1->Description =
+        L"MNIST klasorunu secin (train ve test alt klasorleri icermeli)";
+    //
     // Form1
     //
     this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-    this->ClientSize = System::Drawing::Size(1463, 633);
+    this->ClientSize = System::Drawing::Size(1505, 781);
     this->Controls->Add(this->btnSetMomentum);
     this->Controls->Add(this->txtMomentum);
     this->Controls->Add(this->lblMomentum);
@@ -1217,5 +1311,219 @@ private:
   System::Windows::Forms::TextBox ^ txtMomentum;
   System::Windows::Forms::Button ^ btnSetMomentum;
   float currentMomentum;
+
+  // MNIST Manager (designer bölgesinin dışında)
+  MNIST_Manager ^ mnistManager;
+
+  // ========== MNIST EVENT HANDLERS ==========
+private:
+  System::Void loadMNISTToolStripMenuItem_Click(System::Object ^ sender,
+                                                System::EventArgs ^ e) {
+    if (folderBrowserDialog1->ShowDialog() ==
+        System::Windows::Forms::DialogResult::OK) {
+      String ^ path = folderBrowserDialog1->SelectedPath;
+
+      // 1000 train (100 per digit), 100 test (10 per digit)
+      bool success = mnistManager->LoadMNIST(path, 100, 10);
+
+      if (success) {
+        int trainCount = mnistManager->GetTrainCount();
+        int testCount = mnistManager->GetTestCount();
+        MessageBox::Show("MNIST Loaded!\nTrain: " + trainCount +
+                         " samples\nTest: " + testCount + " samples");
+        textBox1->Text = "MNIST veri seti yuklendu.\r\nEgitim: " + trainCount +
+                         " ornek\r\nTest: " + testCount + " ornek\r\n";
+      } else {
+        MessageBox::Show(
+            "MNIST yukleme basarisiz! Klasor yapisi kontrol edin:\n" + path +
+            "\\train\\0-9\n" + path + "\\test\\0-9");
+      }
+    }
+  }
+
+  System::Void trainMNISTToolStripMenuItem_Click(System::Object ^ sender,
+                                                 System::EventArgs ^ e) {
+    if (!mnistManager->dataLoaded) {
+      MessageBox::Show("Once MNIST veri setini yukleyin!");
+      return;
+    }
+
+    float learningRate = 0.01f; // Daha yüksek learning rate
+    float momentum = currentMomentum;
+    float minError = 0.05f; // Daha yüksek tolerans
+    int maxEpoch = 20;      // Daha az epoch (hızlı test için)
+    int finalEpoch = 0;
+
+    textBox1->Text =
+        "MLP Egitimi basliyor...\r\nLearning Rate: " + learningRate +
+        "\r\nMomentum: " + momentum + "\r\nMax Epoch: " + maxEpoch + "\r\n";
+    textBox1->Text += "Lutfen bekleyin, bu islem biraz zaman alabilir...\r\n";
+    this->Refresh();
+    Application::DoEvents();
+
+    // Başlangıç zamanını kaydet
+    System::DateTime startTime = System::DateTime::Now;
+
+    float *errorHistory = mnistManager->TrainMLP(
+        learningRate, momentum, minError, maxEpoch, finalEpoch);
+
+    // Geçen süreyi hesapla
+    System::TimeSpan elapsed = System::DateTime::Now - startTime;
+
+    if (errorHistory) {
+      // Error grafiğini çiz
+      chart1->Series["Series1"]->Points->Clear();
+      chart1->Series["Series1"]->ChartType = System::Windows::Forms::
+          DataVisualization::Charting::SeriesChartType::Line;
+
+      for (int i = 0; i < finalEpoch; i++) {
+        chart1->Series["Series1"]->Points->AddY(errorHistory[i]);
+      }
+
+      textBox1->Text += "Egitim tamamlandi! Epoch: " + finalEpoch + "\r\n";
+      textBox1->Text += "Son hata: " + errorHistory[finalEpoch - 1] + "\r\n";
+      textBox1->Text +=
+          "Sure: " + elapsed.TotalSeconds.ToString("F1") + " saniye\r\n";
+
+      delete[] errorHistory;
+
+      MessageBox::Show("MLP Egitimi tamamlandi!\nEpoch: " + finalEpoch +
+                       "\nSure: " + elapsed.TotalSeconds.ToString("F1") +
+                       " saniye");
+    } else {
+      MessageBox::Show("Egitim basarisiz! Veri yuklendiginden emin olun.");
+    }
+  }
+
+  System::Void testMNISTToolStripMenuItem_Click(System::Object ^ sender,
+                                                System::EventArgs ^ e) {
+    if (!mnistManager->mlpTrained) {
+      MessageBox::Show("Once MLP'yi egitin!");
+      return;
+    }
+
+    int confMatrix[10][10];
+    float accuracy = mnistManager->TestMLP(confMatrix);
+
+    textBox1->Text = "=== MLP CONFUSION MATRIX ===\r\n";
+    textBox1->Text += "     0  1  2  3  4  5  6  7  8  9  <- Predicted\r\n";
+    textBox1->Text += "    --------------------------------\r\n";
+
+    for (int i = 0; i < 10; i++) {
+      String ^ row = i + " |  ";
+      for (int j = 0; j < 10; j++) {
+        row += confMatrix[i][j].ToString()->PadLeft(2) + " ";
+      }
+      textBox1->Text += row + "\r\n";
+    }
+    textBox1->Text += "^\r\nActual\r\n\r\n";
+    textBox1->Text += "MLP Test Accuracy: %" + accuracy.ToString("F2") + "\r\n";
+
+    MessageBox::Show("MLP Test Accuracy: %" + accuracy.ToString("F2"));
+  }
+
+  System::Void trainAutoencoderToolStripMenuItem_Click(System::Object ^ sender,
+                                                       System::EventArgs ^ e) {
+    if (!mnistManager->dataLoaded) {
+      MessageBox::Show("Once MNIST veri setini yukleyin!");
+      return;
+    }
+
+    float learningRate = 0.002f; // Daha düşük (stabil öğrenme)
+    float momentum = currentMomentum;
+    float minError = 0.05f; // Daha düşük tolerans
+    int maxEpoch = 30;      // Daha fazla epoch
+    int finalEpoch = 0;
+
+    textBox1->Text =
+        "Autoencoder Egitimi basliyor...\r\nMimari: 784->420->10->420->784\r\n";
+    textBox1->Text += "Lutfen bekleyin (bu islem cok uzun surebilir)...\r\n";
+    this->Refresh();
+    Application::DoEvents();
+
+    System::DateTime startTime = System::DateTime::Now;
+
+    float *errorHistory = mnistManager->TrainAutoencoder(
+        learningRate, momentum, minError, maxEpoch, finalEpoch);
+
+    System::TimeSpan elapsed = System::DateTime::Now - startTime;
+
+    if (errorHistory) {
+      chart1->Series["Series1"]->Points->Clear();
+      chart1->Series["Series1"]->ChartType = System::Windows::Forms::
+          DataVisualization::Charting::SeriesChartType::Line;
+
+      for (int i = 0; i < finalEpoch; i++) {
+        chart1->Series["Series1"]->Points->AddY(errorHistory[i]);
+      }
+
+      textBox1->Text +=
+          "Autoencoder egitimi tamamlandi! Epoch: " + finalEpoch + "\r\n";
+      textBox1->Text +=
+          "Sure: " + elapsed.TotalSeconds.ToString("F1") + " saniye\r\n";
+      delete[] errorHistory;
+    }
+
+    // Encoder + Classifier eğitimi
+    textBox1->Text += "\r\nEncoder + Classifier egitimi basliyor...\r\n";
+    this->Refresh();
+    Application::DoEvents();
+
+    startTime = System::DateTime::Now;
+    learningRate = 0.005f;
+    maxEpoch = 50; // Daha fazla epoch
+
+    float *encErrorHistory = mnistManager->TrainEncoderClassifier(
+        learningRate, momentum, minError, maxEpoch, finalEpoch);
+
+    elapsed = System::DateTime::Now - startTime;
+
+    if (encErrorHistory) {
+      chart1->Series["Series1"]->Points->Clear();
+
+      for (int i = 0; i < finalEpoch; i++) {
+        chart1->Series["Series1"]->Points->AddY(encErrorHistory[i]);
+      }
+
+      textBox1->Text +=
+          "Encoder + Classifier egitimi tamamlandi! Epoch: " + finalEpoch +
+          "\r\n";
+      textBox1->Text +=
+          "Sure: " + elapsed.TotalSeconds.ToString("F1") + " saniye\r\n";
+      delete[] encErrorHistory;
+
+      MessageBox::Show("Autoencoder ve Encoder+Classifier egitimi tamamlandi!");
+    }
+  }
+
+  System::Void
+  testEncoderClassifierToolStripMenuItem_Click(System::Object ^ sender,
+                                               System::EventArgs ^ e) {
+    if (!mnistManager->encClassifierTrained) {
+      MessageBox::Show("Once Autoencoder ve Encoder+Classifier'i egitin!");
+      return;
+    }
+
+    int confMatrix[10][10];
+    float accuracy = mnistManager->TestEncoderClassifier(confMatrix);
+
+    textBox1->Text = "=== ENCODER+CLASSIFIER CONFUSION MATRIX ===\r\n";
+    textBox1->Text += "     0  1  2  3  4  5  6  7  8  9  <- Predicted\r\n";
+    textBox1->Text += "    --------------------------------\r\n";
+
+    for (int i = 0; i < 10; i++) {
+      String ^ row = i + " |  ";
+      for (int j = 0; j < 10; j++) {
+        row += confMatrix[i][j].ToString()->PadLeft(2) + " ";
+      }
+      textBox1->Text += row + "\r\n";
+    }
+    textBox1->Text += "^\r\nActual\r\n\r\n";
+    textBox1->Text += "Encoder + Classifier Test Accuracy: %" +
+                      accuracy.ToString("F2") + "\r\n";
+
+    MessageBox::Show("Encoder + Classifier Test Accuracy: %" +
+                     accuracy.ToString("F2"));
+  }
 };
 } // namespace CppCLRWinformsProjekt
